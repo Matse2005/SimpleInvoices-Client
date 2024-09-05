@@ -64,7 +64,7 @@ export default function InvoicePage() {
           key: key,
           author: verificationResponse['author']
         })
-        router.push('/invoices')
+        router.push('/welcome')
         return true; // Key is valid
       } else {
         console.error('API key is invalid');
