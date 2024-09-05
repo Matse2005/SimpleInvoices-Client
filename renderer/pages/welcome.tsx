@@ -50,13 +50,13 @@ export default function WelcomePage() {
           invoicesVar = true
         }
       }
-      // if (setupVar && invoicesVar)
-      //   router.push('/invoices');
-      // else {
-      //   setInvoices(invoicesVar)
-      //   setSetup(setupVar)
-      //   setLoading(false)
-      // }
+      if (setupVar && invoicesVar)
+        router.push('/invoices');
+      else {
+        setInvoices(invoicesVar)
+        setSetup(setupVar)
+        setLoading(false)
+      }
     } catch (e) {
       console.log('Error: ', e.message);
     }

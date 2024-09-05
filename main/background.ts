@@ -37,8 +37,8 @@ if (isProd) {
   mainWindow.maximize();
 
   if (isProd) {
-    // mainWindow.setMenuBarVisibility(false);
-    // mainWindow.setMenu(null)
+    mainWindow.setMenuBarVisibility(false);
+    mainWindow.setMenu(null)
     await mainWindow.loadURL('app://./welcome')
   } else {
     const port = process.argv[2]
