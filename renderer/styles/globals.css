@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+
+  .col-span-15 {
+    grid-column: span 18 / span 18;
+  }
+
+  .grid-cols-32 {
+    grid-template-columns: repeat(32, minmax(0, 1fr));
+  }
+
+  .grid-cols-14 {
+    grid-template-columns: repeat(14, minmax(0, 1fr));
+  }
+
+  @font-face {
+    font-family: Roboto;
+    src: url('../public/fonts/RobotoMono-VariableFont_wght.ttf');
+  }
+}

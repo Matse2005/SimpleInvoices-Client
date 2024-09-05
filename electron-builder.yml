@@ -1,0 +1,37 @@
+appId: be.matsevh.simpele-facturen
+productName: Simpele Facturen
+copyright: Copyright © 2024 MatseVH
+directories:
+  output: dist
+  buildResources: resources
+files:
+  - from: .
+    filter:
+      - package.json
+      - app
+publish:
+  provider: github
+  owner: matse2005
+  repo: SimpleInvoices-Client
+win:
+  target:
+    - dir
+    - nsis
+    - zip
+  icon: renderer/public/images/logo.png
+linux:
+  target:
+    - dir
+    - appimage
+    - zip
+  icon: renderer/public/images/logo.png
+mac:
+  target:
+    - dir
+    - dmg
+    - zip
+  icon: renderer/public/images/logo.png
+nsis:
+  oneClick: false
+  createDesktopShortcut: true
+  deleteAppDataOnUninstall: true
