@@ -4,7 +4,7 @@ import Link from "next/link";
 import Button from "../components/Button";
 import { useRouter } from "next/router";
 import fetch from '../lib/fetch'
-import Loading from "../components/tabs/Loading";
+import TitleBar from "../components/TitleBar"
 import Image from "next/image";
 
 export default function WelcomePage() {

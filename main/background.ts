@@ -23,6 +23,7 @@ if (isProd) {
   const mainWindow = createWindow('main', {
     width: 1000,
     height: 600,
+    frame: false, // Remove default frame
     // titleBarStyle: 'hidden',
     // titleBarOverlay: {
     //   color: '#2f3241',
@@ -46,45 +47,21 @@ if (isProd) {
     // mainWindow.webContents.openDevTools()
   }
 
-  // Handle print requests with a specific URL
-  ipcMain.on('print-url', async (event, url) => {
-    // Create a hidden BrowserWindow to load and print the page
-    let printWindow = new BrowserWindow({
-      show: false,
-      webPreferences: {
-        preload: path.join(__dirname, 'preload.js'),
-      },
-    });
 
-    // Load the specified URL
-    if (isProd) {
-      await printWindow.loadURL('app://.' + url);
+  globalShortcut.register('CommandOrControl+Shift+I', () => {
+    mainWindow.webContents.openDevTools()
+  })
+
+  // IPC handlers for window controls
+  ipcMain.on('window-minimize', () => mainWindow.minimize());
+  ipcMain.on('window-maximize', () => {
+    if (mainWindow.isMaximized()) {
+      mainWindow.unmaximize();
     } else {
-      await printWindow.loadURL(`http://localhost:${process.argv[2]}` + url);
+      mainWindow.maximize();
     }
-
-    // Wait until the content is fully loaded, then print
-    printWindow.webContents.on('did-finish-load', () => {
-      printWindow.webContents.print({
-        silent: false, // Set to true if you don't want the print dialog to appear
-        printBackground: true,
-      }, () => {
-        // Close the window after printing
-        printWindow.close();
-      });
-    });
   });
-
-  // Handle the PDF generation request
-  ipcMain.handle('print-to-pdf', async (event) => {
-    const pdfPath = path.join(app.getPath('desktop'), 'page.pdf');
-    const pdfOptions = {
-      format: 'A4'
-    };
-    const pdfBuffer = await mainWindow.webContents.printToPDF({});
-    fs.writeFileSync(pdfPath, pdfBuffer);
-    return pdfPath;
-  });
+  ipcMain.on('window-close', () => mainWindow.close());
 })()
 
 app.on('window-all-closed', () => {

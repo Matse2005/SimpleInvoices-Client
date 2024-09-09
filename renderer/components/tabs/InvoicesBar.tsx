@@ -2,10 +2,10 @@ export default function InvoicesBar({ invoices, invoice, getInvoice }) {
   return (
     <aside
       id="emails"
-      className="fixed top-0 z-40 h-screen transition-transform -translate-x-full border-r-2 w-96 left-64 sm:translate-x-0 border-r-gray-200"
+      className="fixed z-40 h-screen transition-transform -translate-x-full border-r-2 top-8 w-96 left-64 sm:translate-x-0 border-r-gray-200"
       aria-label="Sidebar"
     >
-      <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 ">
+      <div className="h-full px-3 py-4 overflow-y-hidden transition-all bg-white hover:overflow-y-auto ">
         <ul className="space-y-2 font-medium">
           {invoices.map((item, index) => (
             <li className="mb-2" key={index}>

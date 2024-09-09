@@ -8,10 +8,10 @@
   - Print pdf: Done
   - NextJS page to pdf in function: Cheated, added a page on the server
 - Create error validation: Done
+- Edit: Done
 
 ## To Do
 
-- Edit
 - Share
 
 ## Later

@@ -82,7 +82,6 @@ const byDate = async (config): Promise<any[]> => {
 };
 
 const byAuthor = async (config, authorId): Promise<any[]> => {
-  config = config()
   try {
     const json = await ky
       .get(config['server'] + "/api/invoices/by/author/" + authorId, {
@@ -99,7 +98,6 @@ const byAuthor = async (config, authorId): Promise<any[]> => {
 };
 
 const byLocation = async (config, locationId): Promise<any[]> => {
-  config = config()
   try {
     const json = await ky
       .get(config['server'] + "/api/invoices/by/location/" + locationId, {
@@ -116,7 +114,6 @@ const byLocation = async (config, locationId): Promise<any[]> => {
 };
 
 const byYear = async (config, year): Promise<any[]> => {
-  config = config()
   try {
     const json = await ky
       .get(config['server'] + "/api/invoices/by/year/" + year, {

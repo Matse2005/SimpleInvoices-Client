@@ -21,6 +21,9 @@ const handler = {
     ipcRenderer.once(channel, subscription);
   },
   printPage: (url: string) => ipcRenderer.send('print-url', url),
+  minimize: () => ipcRenderer.send('window-minimize'),
+  maximize: () => ipcRenderer.send('window-maximize'),
+  close: () => ipcRenderer.send('window-close'),
 };
 
 contextBridge.exposeInMainWorld('ipc', handler)

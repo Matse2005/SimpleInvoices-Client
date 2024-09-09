@@ -50,6 +50,10 @@ export default function InvoicesPage() {
   }, []);
 
   useEffect(() => {
+    console.log(config)
+    if (router.query.id)
+      fetchInvoice(Number(router.query.id))
+
     fetchData()
   }, [config]);
 
@@ -59,6 +63,26 @@ export default function InvoicesPage() {
       setData(fetchedLocations);
       console.log(fetchedLocations)
       setLoading(false);
+    } catch (e) {
+      console.error('Error fetching locations:', e);
+    }
+  };
+
+  const fetchInvoice = async (id) => {
+    try {
+      const fetchedInvoice = await fetch.getInvoice({ server: config['server'], key: config['key'] }, id);
+      fetchedInvoice['author_id'] = fetchedInvoice['author']['id']
+      fetchedInvoice['location_id'] = fetchedInvoice['location']['id']
+      fetchedInvoice['items'].push({
+        description: '',
+        amount: 1,
+        price: 0,
+        btw_percent: 21,
+        btw: 0,
+        total: 0
+      });
+      setFields(fetchedInvoice);
+      console.log(fetchedInvoice)
     } catch (e) {
       console.error('Error fetching locations:', e);
     }
@@ -120,7 +144,7 @@ export default function InvoicesPage() {
     if (index === updatedItems.length - 1 && value !== '') {
       updatedItems.push({
         description: '',
-        amount: 0,
+        amount: 1,
         price: 0,
         btw_percent: 21,
         btw: 0,
@@ -166,7 +190,7 @@ export default function InvoicesPage() {
       if (!item.amount || item.amount <= 0) {
         newErrors[`items[${index}].amount`] = (newErrors[`items[${index}].amount`] || []).concat('Aantal moet groter zijn dan 0.');
       }
-      if (!item.price) {
+      if (!item.price || item.price !== 0) {
         newErrors[`items[${index}].price`] = (newErrors[`items[${index}].price`] || []).concat('Prijs is verplicht');
       }
     });
@@ -193,10 +217,16 @@ export default function InvoicesPage() {
     }
 
     try {
-      await ky.post(config.server + '/api/invoice', {
-        headers: { Authorization: "Bearer " + config.key },
-        json: postData
-      }).json();
+      if (router.query.id)
+        await ky.put(config.server + '/api/invoice/' + router.query.id, {
+          headers: { Authorization: "Bearer " + config.key },
+          json: postData
+        }).json();
+      else
+        await ky.post(config.server + '/api/invoice', {
+          headers: { Authorization: "Bearer " + config.key },
+          json: postData
+        }).json();
 
       router.push('/invoices');
       setSaving(false);
@@ -297,7 +327,7 @@ export default function InvoicesPage() {
                   </div>
                   <div className="flex flex-col text-base font-semibold">
                     <label htmlFor="btw">Locatie</label>
-                    <select value={fields.location_id ?? 1} className='px-3 py-2 bg-gray-200 rounded-lg disabled:text-gray-500 disabled:hover:cursor-not-allowed' defaultValue={fields['location_id'] ?? ''} onChange={(e) => changeField('location_id', e.target.value, true)} id="location_id">
+                    <select value={fields.location_id ?? 1} className='px-3 py-2 bg-gray-200 rounded-lg disabled:text-gray-500 disabled:hover:cursor-not-allowed' defaultValue={fields['location_id'] ?? 1} onChange={(e) => changeField('location_id', e.target.value, null, true)} id="location_id">
                       {data.map((loc) => (
                         <option key={loc.id} value={loc.id}>{loc.name}</option>
                       ))}
@@ -323,7 +353,7 @@ export default function InvoicesPage() {
                     <div className="flex flex-col w-full gap-y-4">
                       <div className="flex flex-col text-base font-semibold gap-y-1">
                         <label htmlFor="btw">BTW Nr. Klant</label>
-                        <input required placeholder='BE123456789' onChange={(e) => changeField('btw_number', e.target.value, true)} value={fields['btw_number']} className='px-3 py-2 bg-gray-200 rounded-lg disabled:text-gray-500 disabled:hover:cursor-not-allowed' type="text" name="btw" id="btw" />
+                        <input required placeholder='BE123456789' onChange={(e) => changeField('btw_number', e.target.value, null, true)} value={fields['btw_number']} className='px-3 py-2 bg-gray-200 rounded-lg disabled:text-gray-500 disabled:hover:cursor-not-allowed' type="text" name="btw" id="btw" />
                       </div>
                       {errors['btw_number'] && errors['btw_number'].map((error, index) => (
                         <small className='text-red-500' key={index}>{error}</small>
@@ -347,7 +377,7 @@ export default function InvoicesPage() {
                       </div>
                       <div className="flex flex-col text-base font-semibold">
                         <label htmlFor="btw">Aantal</label>
-                        <input className='px-3 py-2 bg-gray-200 rounded-lg disabled:text-gray-500 disabled:hover:cursor-not-allowed' value={item.amount ?? 0} onChange={(e) => changeItem('amount', e.target.value, index)} type="number" min="0" name={`item_amount_${index}`} id={`item_amount_${index}`} />
+                        <input className='px-3 py-2 bg-gray-200 rounded-lg disabled:text-gray-500 disabled:hover:cursor-not-allowed' value={item.amount ?? 1} onChange={(e) => changeItem('amount', e.target.value, index)} type="number" min="0" name={`item_amount_${index}`} id={`item_amount_${index}`} />
                         {errors[`items[${index}].amount`] && errors[`items[${index}].amount`].map((error, index) => (
                           <small className='text-red-500' key={index}>{error}</small>
                         ))}

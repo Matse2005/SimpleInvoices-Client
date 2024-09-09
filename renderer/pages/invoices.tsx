@@ -14,6 +14,7 @@ import Loading from "../components/tabs/Loading";
 import Click from "../components/tabs/Click";
 import InvoiceBar from "../components/tabs/Invoice";
 import { useRouter } from "next/router";
+import TitleBar from "../components/TitleBar";
 
 export default function InvoicesPage() {
   const router = useRouter();
@@ -77,7 +78,7 @@ export default function InvoicesPage() {
       <Head>
         <title>Facturen</title>
       </Head>
-      <div className="relative flex w-full h-screen overflow-hidden print:hidden">
+      <div className="relative z-10 flex w-full h-full overflow-hidden print:hidden">
         {!loading ? (
           <div className="w-full">
 

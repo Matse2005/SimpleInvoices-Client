@@ -8,12 +8,12 @@ export default function Sidebar({ latest }) {
   return (
     <aside
       id="sidebar"
-      className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full border-r-2 border-r-gray-200 sm:translate-x-0"
+      className="fixed left-0 z-40 w-64 h-screen transition-transform -translate-x-full border-r-2 top-8 border-r-gray-200 sm:translate-x-0"
       aria-label="Sidebar"
     >
-      <div className="h-full px-3 py-4 space-y-4 overflow-y-auto bg-gray-50">
+      <div className="h-full px-3 py-4 space-y-4 overflow-y-auto bg-WHITE">
         <ul className="pb-4 space-y-2 font-medium border-b-2 border-b-gray-200">
-          <Link href={'/create?next=' + (latest + 1)}>
+          <Link href={'/manage?next=' + (latest + 1)}>
             <Button
               slot="Aanmaken" className="w-full" />
           </Link>

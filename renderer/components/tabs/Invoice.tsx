@@ -37,12 +37,14 @@ export default function InvoiceBar({ invoice, config }) {
       <div className="flex justify-between py-5 text-gray-500 border-b border-b-gray-200">
         <div className="flex gap-x-3">
           {invoice['editable'] ? (
-            <div onClick={() => alert('Het bewerken van facturen is op deze moment nog niet mogelijk.')} className="hover:cursor-pointer">
+            // <div onClick={() => alert('Het bewerken van facturen is op deze moment nog niet mogelijk.')} className="hover:cursor-pointer">
+            <Link href={'/manage?id=' + invoice.id}>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="edit"
                 className="w-6 h-6 transition duration-75 hover:text-primary-500" fill="currentColor">
                 <path d="M21,12a1,1,0,0,0-1,1v6a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V5A1,1,0,0,1,5,4h6a1,1,0,0,0,0-2H5A3,3,0,0,0,2,5V19a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V13A1,1,0,0,0,21,12ZM6,12.76V17a1,1,0,0,0,1,1h4.24a1,1,0,0,0,.71-.29l6.92-6.93h0L21.71,8a1,1,0,0,0,0-1.42L17.47,2.29a1,1,0,0,0-1.42,0L13.23,5.12h0L6.29,12.05A1,1,0,0,0,6,12.76ZM16.76,4.41l2.83,2.83L18.17,8.66,15.34,5.83ZM8,13.17l5.93-5.93,2.83,2.83L10.83,16H8Z"></path>
               </svg>
-            </div>
+            </Link>
+            // </div>
           ) : null}
           <div onClick={() => window.ipc.send('download', url, invoice.number)} className="hover:cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="folder-download"

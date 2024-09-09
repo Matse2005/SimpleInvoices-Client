@@ -4,6 +4,7 @@ import Button from '../components/Button';
 import ky from 'ky'
 import { useRouter } from 'next/router';
 import fetch from '../lib/fetch';
+import TitleBar from '../components/TitleBar';
 
 export default function InvoicePage() {
   // const store = Store.initRenderer();
@@ -105,8 +106,8 @@ export default function InvoicePage() {
       <Head>
         <title>Facturen</title>
       </Head>
-      <div className="flex items-center justify-center h-full min-h-screen">
-        <section className="flex flex-col items-center max-w-screen-sm mx-auto gap-y-5">
+      <div className="h-full">
+        <section className="flex flex-col items-center max-w-screen-sm mx-auto translate-y-1/2 gap-y-5 top-1/2">
           <div className="flex flex-col w-full gap-y-3">
             <div className="">
               <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 24 24" id="setting"
